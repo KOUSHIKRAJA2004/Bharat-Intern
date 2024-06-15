@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Data Analysis</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Titanic Data Analysis</h1>
+        <a href="{{ url_for('analysis') }}">Run Analysis</a>
+
+        {% if accuracy %}
+        <h2>Analysis Results</h2>
+        <p><strong>Accuracy:</strong> {{ accuracy }}</p>
+        <p><strong>Confusion Matrix:</strong></p>
+        <pre>{{ conf_matrix }}</pre>
+        <p><strong>Classification Report:</strong></p>
+        <pre>{{ class_report }}</pre>
+        <h2>Survival Distribution</h2>
+        <img src="data:image/png;base64,{{ plot_url1 }}" alt="Survived vs Not Survived">
+        <h2>Class Distribution</h2>
+        <img src="data:image/png;base64,{{ plot_url2 }}" alt="Distribution of Class">
+        
+        <hr>
+        <h2>Predict Survival for New Passenger</h2>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <label for="pclass">Passenger Class:</label>
+            <input type="number" id="pclass" name="pclass" required><br><br>
+            
+            <label for="sex">Sex (0 for male, 1 for female):</label>
+            <input type="number" id="sex" name="sex" required><br><br>
+            
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" step="any" required><br><br>
+            
+            <label for="siblings_spouses">Siblings/Spouses Aboard:</label>
+            <input type="number" id="siblings_spouses" name="siblings_spouses" required><br><br>
+            
+            <label for="parents_children">Parents/Children Aboard:</label>
+            <input type="number" id="parents_children" name="parents_children" required><br><br>
+            
+            <label for="fare">Fare:</label>
+            <input type="number" id="fare" name="fare" step="any" required><br><br>
+            
+            <label for="embarked_Q">Embarked (Q):</label>
+            <input type="checkbox" id="embarked_Q" name="embarked_Q" value="1"><br><br>
+            
+            <label for="embarked_S">Embarked (S):</label>
+            <input type="checkbox" id="embarked_S" name="embarked_S" value="1"><br><br>
+            
+            <input type="submit" value="Predict Survival">
+        </form>
+
+        {% if prediction_result %}
+        <h2>Prediction Result:</h2>
+        <p>{{ prediction_result }}</p>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
